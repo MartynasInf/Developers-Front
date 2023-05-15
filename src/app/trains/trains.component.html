@@ -1,0 +1,112 @@
+<div class="container">
+  <table class="table table-striped table-dark mt-5">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Capacity</th>
+        <th scope="col">Year created</th>
+        <th scope="col">Destinations</th>
+        <th scope="col">Actions</th>
+
+      </tr>
+    </thead>
+    <tbody *ngFor="let train of trains">
+      <tr>
+        <td>{{ train.id }}</td>
+        <td>{{ train.name }}</td>
+        <td>{{ train.capacity }}</td>
+        <td>{{ train.yearCreated }}</td>
+        <td >
+          <p *ngFor="let destination of train.destinations">
+            {{destination.name}} <button class="btn btn-danger" (click)="deleteDestination(destination.id)">X</button>
+          </p>
+        </td>
+        <td>
+          <button class="btn btn-warning margins" (click)="updateForm(train)">
+            Edit
+          </button>
+          <button class="btn btn-danger margins" (click)="deleteTrain(train)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Add new train</h2>
+  <form #addForm="ngForm" (ngSubmit)="saveTrain(addForm)">
+    <input type="hidden" name="id" id="id" ngModel="{{ updateTrain?.id }}" />
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        name="name"
+        class="form-control"
+        id="name"
+        ngModel="{{ updateTrain?.name }}"
+      />
+    </div>
+    <div class="form-group">
+      <label for="capacity">Capacity</label>
+      <input
+        type="text"
+        name="capacity"
+        class="form-control"
+        id="capacity"
+        ngModel="{{ updateTrain?.capacity }}"
+      />
+    </div>
+    <div class="form-group">
+      <label for="yearCreated">Year Created</label>
+      <input
+        type="text"
+        name="yearCreated"
+        class="form-control"
+        id="yearCreated"
+        ngModel="{{ updateTrain?.yearCreated }}"
+      />
+    </div>
+    <button type="submit" class="btn btn-success">Add</button>
+  </form>
+
+  <div class="mt-5">
+    <h2>Add a destination</h2>
+  </div>
+
+  <form #addForm2="ngForm" (ngSubmit)="saveDestination(addForm2)">
+    <div class="form-group">
+      <label class="mr-sm-2" for="inlineFormCustomSelect">Chose train</label>
+      <select
+        name="workplaces"
+        class="custom-select mr-sm-2"
+        id="workplaces"
+        [(ngModel)]="selectedTrain"
+      >
+        <option selected>Choose...</option>
+        <option *ngFor="let train of trains" value="{{train.id}}">
+          {{ train.id }}, {{train.name}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" name="name" class="form-control" id="name" ngModel />
+    </div>
+    <div class="form-group">
+      <label for="distance">Distance</label>
+      <input
+        type="text"
+        name="distance"
+        class="form-control"
+        id="distance"
+        ngModel
+      />
+    </div>
+    <button type="submit" class="btn btn-success">Add</button>
+  </form>
+
+
+  <div class="mt-5"></div>
+</div>
